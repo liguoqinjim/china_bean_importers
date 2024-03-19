@@ -18,6 +18,7 @@ currency_code_map = {
     "英镑": "GBP",
     "加拿大元": "CAD",
     "澳大利亚元": "AUD",
+    "新加坡元": "SGD",
 }
 
 SAME_AS_NARRATION = object()
@@ -74,6 +75,8 @@ def open_pdf(config, name):
     if doc.is_encrypted:
         for password in config["pdf_passwords"]:
             doc.authenticate(password)
+            if not doc.is_encrypted:
+                return doc
         if doc.is_encrypted:
             return None
     return doc

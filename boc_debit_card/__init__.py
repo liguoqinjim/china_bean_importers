@@ -112,7 +112,7 @@ class Importer(PdfImporter):
         self.column_offsets = [
             46,
             112,
-            172,
+            162,
             234,
             300,
             339,
