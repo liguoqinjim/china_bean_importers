@@ -10,7 +10,10 @@ PAYEE_RE = re.compile(r"(\D*)(\d+)")
 
 def gen_txn(config, file, parts, lineno, flag, card_acc, real_name):
     # Customer Type can be empty
-    assert len(parts) == 6 or len(parts) == 7
+    # assert len(parts) == 6 or len(parts) == 7
+    my_assert(len(parts) == 5 or len(parts) == 6 or len(parts) == 7, f"Cannot parse line in PDF", lineno, parts) 
+    if len(parts) == 5:
+        parts += ['']
 
     # parts[5]: 对手信息
     payee = parts[5]
