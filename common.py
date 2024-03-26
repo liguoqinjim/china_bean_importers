@@ -44,6 +44,16 @@ class BillDetailMapping(typing.NamedTuple):
     def match(
         self, desc: str, payee: str
     ) -> tuple[typing.Optional[str], dict[str, object], set[str]]:
+        # LI
+        if self.narration_keywords is not None and self.payee_keywords is not None:
+            if len(self.narration_keywords) == 1 and len(self.payee_keywords) == 1:
+                # print(f"liguoqinjim1:[{self.narration_keywords[0]}],[{self.payee_keywords[0]}],[{desc}],[{payee}]")
+                if self.narration_keywords[0] in desc and self.payee_keywords[0] in payee:
+                    # print("liguoqinjim2: 信用卡",desc,payee)
+                    return self.canonicalize()
+                else:
+                    return None, {}, set()
+
         # match narration first
         if desc is not None and self.narration_keywords is not None:
             for keyword in self.narration_keywords:

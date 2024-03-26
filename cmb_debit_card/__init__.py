@@ -39,6 +39,7 @@ def gen_txn(config, file, parts, lineno, flag, card_acc, real_name):
         payee, payee_account = m.groups()
     if payee_account:
         metadata["payee_account"] = payee_account
+    metadata['input_source'] = "cmb_debit_card"
 
     if m := match_destination_and_metadata(config, narration, payee):
         (account2, new_meta, new_tags) = m
