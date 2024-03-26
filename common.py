@@ -95,10 +95,18 @@ def open_pdf(config, name):
 def find_account_by_card_number(config, card_number):
     if isinstance(card_number, int):
         card_number = str(card_number)
+    # print("liguoqinjim3:",config["card_accounts"].items())
     for prefix, accounts in config["card_accounts"].items():
+        # print("liguoqinjim4:",accounts,card_number)
         for bank, numbers in accounts.items():
             if card_number in numbers:
+                # print("liguoqinjim find_account_by_card_number:", prefix, bank, card_number,numbers)
                 return f"{prefix}:{bank}:{card_number}"
+            else:
+                if len(numbers) == 1 and card_number.endswith(numbers[0]):
+                    # print("liguoqinjim find_account_by_card_number2:", prefix, bank, card_number,numbers)
+                    return f"{prefix}:{bank}:{numbers[0]}"
+                    
 
     return None
 

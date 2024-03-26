@@ -50,7 +50,10 @@ def gen_txn(config, file, parts, lineno, flag, card_acc, real_name):
 
     # Handle transfer to credit/debit cards
     # parts[5]: 对手信息
+    # print("liguoqinjim0:",parts)
+    # print(f"liguoqinjim1:[{real_name}],[{payee_account}],[{payee}]",parts)
     if payee.startswith(real_name) and payee_account:
+        # print("liguoqinjim2:",payee_account)
         new_account = find_account_by_card_number(config, payee_account)
         if new_account is not None:
             account2 = new_account
