@@ -29,6 +29,21 @@ def gen_txn(config, file, parts, lineno, flag, card_acc, real_name):
     units1 = amount.Amount(D(parts[2]), "CNY")
     # parts[3]: 余额
     balance = amount.Amount(D(parts[3]), "CNY")
+    # parts[2]: 币别
+    currency_code = match_currency_code(parts[1])
+    # print(f"liguoqinjim0: {date} {narration} [{units1}],[{parts[1]}]", file=sys.stderr, end=" -- ")
+
+    # if in_blacklist(config, narration):
+    #     print(
+    #         f"Item in blacklist: {date} {narration} [{units1}]",
+    #         file=sys.stderr,
+    #         end=" -- ",
+    #     )
+    #     if units1 < amount.Amount(D(0), currency_code):
+    #         print(f"Expense skipped", file=sys.stderr)
+    #         return None
+    #     else:
+    #         print(f"Income kept in record", file=sys.stderr)
 
     metadata = data.new_metadata(file.name, lineno)
     metadata["balance"] = str(balance)

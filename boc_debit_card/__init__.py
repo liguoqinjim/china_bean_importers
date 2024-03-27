@@ -52,6 +52,7 @@ def gen_txn(config, file, parts, lineno, flag, card_acc, real_name):
         metadata["payee_account"] = parts[10]
     if "------" not in parts[11]:
         metadata["payee_branch"] = parts[11]
+    metadata['input_source'] = "boc_debit_card"
 
     tags = set()
 

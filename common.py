@@ -19,6 +19,7 @@ currency_code_map = {
     "加拿大元": "CAD",
     "澳大利亚元": "AUD",
     "新加坡元": "SGD",
+    "CNY": "CNY", # 兼容招商
 }
 
 SAME_AS_NARRATION = object()
