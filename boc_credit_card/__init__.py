@@ -19,6 +19,7 @@ class Importer(importer.ImporterProtocol):
             self.type = "pdf"
             if "中国银行信用卡" in file.name:
                 import fitz
+
                 self.doc = fitz.open(file.name)
                 return True
             return False
@@ -57,6 +58,8 @@ class Importer(importer.ImporterProtocol):
                     parts = content.split("\n")
                     if len(parts) == 4:
                         return parse(parts[1])
+                    elif len(parts) == 3 or len(parts) == 2:
+                        return parse(parts[0])
                     else:
                         break
         elif self.type == "email":
@@ -101,7 +104,9 @@ class Importer(importer.ImporterProtocol):
                     elif card_number:
                         if not begin and "Expenditure" in content:
                             begin = True
-                        elif begin and ("Loyalty Plan" in content or "交易日" in content):
+                        elif begin and (
+                            "Loyalty Plan" in content or "交易日" in content
+                        ):
                             begin = False
                         elif begin:
                             # Is it a date line?
@@ -190,7 +195,7 @@ class Importer(importer.ImporterProtocol):
         return text_entries
 
     def extract(self, file, existing_entries=None):
-        
+
         # generate beancount posting entries
         entries = []
 
@@ -230,8 +235,10 @@ class Importer(importer.ImporterProtocol):
 
             if card_number == "":
                 my_warn(f"Empty card number", lineno, entry)
-                tags.add('needs-confirmation')
-                account1 = last_account if last_account is not None else "Assets:Unknown"
+                tags.add("needs-confirmation")
+                account1 = (
+                    last_account if last_account is not None else "Assets:Unknown"
+                )
             else:
                 account1 = find_account_by_card_number(self.config, card_number)
                 my_assert(account1, f"Unknown card number {card_number}", lineno, None)
